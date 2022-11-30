@@ -30,7 +30,8 @@ public class ListarEstoquePDF extends AbstractPdfView {
 		PdfPTable tabelaEstoque = new PdfPTable(4);
 		
 		listaEstoque.forEach(estoque -> {
-			tabelaEstoque.addCell(estoque.getId().toString(getViewerPreferences()));
+			estoque.getId();
+			tabelaEstoque.addCell(Long.toString(getViewerPreferences()));
 			tabelaEstoque.addCell(estoque.getNome());
 			tabelaEstoque.addCell(estoque.getTipo());
 			tabelaEstoque.addCell(estoque.getQuantidade());
