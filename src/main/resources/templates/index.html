@@ -1,289 +1,334 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>    
+    <head th:replace="fragments :: head_pagina">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+        <meta name="msapplication-tap-highlight" content="no">
+        <link rel="SHORTCUT ICON" type="image/x-icon" href="imagens/ICONE.ico">   
+        <link rel="stylesheet" href="resources/css/bootstrap.min.css">          
+        <!--<link href='https://use.fontawesome.com/releases/v5.7.2/css/all.css' rel='stylesheet'>-->
+        <link href="css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">  
+        <!-- Custome CSS-->    
+        <link href="css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">      
+        <!-- INCLUDED PLUGIN CSS ON THIS PAGE -->
+        <link href="js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">          
 
-<head th:replace="fragments :: head_pagina">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous">
-<link href="/style.css" rel="stylesheet" />
-</head>
-<style>
-	#div1 {
-		display: inline-block;
-		float: left;
-		margin-left: -20px;
-		margin-top: -24px;
-	}
-	#container_Principal{
-		margin-right: 620px;
-		padding-left: 130px;
-		
-	}
-	#container_Filhos{
-		margin: 20px;
-	}
-	
-	#div2_index{
-		margin-right: 620px;
-		padding-left: 130px;
-	}
-	
-	
-</style>
-<body>
+        <script src="resources/js/bootstrap.min.js"></script>           
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script>            
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>               
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script> 
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link href="style/style.css" rel="stylesheet" type="text/css"/>        
+    </head> 
 
-	<div>
-		<div th:replace="fragments :: coluna_superior"></div>
-	</div>
+    <script>
+        $('document')
+                .ready(
+                        function () {
+                            $
+                                    .ajax({
+                                        type: "GET",
+                                        url: "http://localhost:8080/objetosCadastradosQuantidade",
+                                        dataType: "json",
+                                        success: function (data) {
+                                            var listaUsuario = [];
+                                            var listaProduto = [];
+                                            var listaEstoque = [];
+                                            var listaDispositivo = [];
 
-	<div class="container" id="div1">
-		<div th:replace="fragments :: menu"></div>
-	</div>
+                                            listaUsuario.push(data[0]);
+                                            listaProduto.push(data[1]);
+                                            listaEstoque.push(data[2]);
+                                            listaDispositivo.push(data[3]);
 
+                                            console.log(data);
 
+                                            criarTabela(listaUsuario);
+                                            criarTabelaProduto(listaProduto);
+                                            criarTabelaEstoque(listaEstoque);
+                                            criarTabelaDispositivo(listaDispositivo);
 
-	<div>
-		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<script>
-			$('document')
-					.ready(
-							function() {
-								$
-										.ajax({
-											type : "GET",
-											url : "http://localhost:8080/objetosCadastradosQuantidade",
-											dataType : "json",
-											success : function(data) {
-												var listaUsuario = [];
-												var listaProduto = [];
-												var listaEstoque = [];
-												var listaDispositivo = [];
+                                        }
+                                    });
 
-												listaUsuario.push(data[0]);
-												listaProduto.push(data[1]);
-												listaEstoque.push(data[2]);
-												listaDispositivo.push(data[3]);
+                            function criarTabela(quantidadeUsuarios) {
+                                var tabelas = document
+                                        .getElementById("tabelaResultado");
+                                var row = tabelas.insertRow(1);
+                                row.innerHTML = "<td>" + "Quantidade: "
+                                        + quantidadeUsuarios + "</td> ";
 
-												console.log(data);
+                            }
 
-												criarTabela(listaUsuario);
-												criarTabelaProduto(listaProduto);
-												criarTabelaEstoque(listaEstoque);
-												criarTabelaDispositivo(listaDispositivo);
+                            function criarTabelaProduto(quantidadeProduto) {
+                                var tabelas = document
+                                        .getElementById("tabelaResultadoProduto");
+                                var row = tabelas.insertRow(1);
+                                row.innerHTML = "<td>" + "Quantidade: "
+                                        + quantidadeProduto + "</td> ";
 
-											}
-										});
+                            }
 
-								function criarTabela(quantidadeUsuarios) {
-									var tabelas = document
-											.getElementById("tabelaResultado");
-									var row = tabelas.insertRow(1);
-									row.innerHTML = "<td>" + "Quantidade: "
-											+ quantidadeUsuarios + "</td> ";
+                            function criarTabelaEstoque(quantidadeEstoque) {
+                                var tabelas = document
+                                        .getElementById("tabelaResultadoEstoque");
+                                var row = tabelas.insertRow(1);
+                                row.innerHTML = "<td>" + "Quantidade: "
+                                        + quantidadeEstoque + "</td> ";
 
-								}
+                            }
 
-								function criarTabelaProduto(quantidadeProduto) {
-									var tabelas = document
-											.getElementById("tabelaResultadoProduto");
-									var row = tabelas.insertRow(1);
-									row.innerHTML = "<td>" + "Quantidade: "
-											+ quantidadeProduto + "</td> ";
+                            function criarTabelaDispositivo(
+                                    quantidadeDispositivo) {
+                                var tabelas = document
+                                        .getElementById("tabelaResultadoDispositivo");
+                                var row = tabelas.insertRow(1);
+                                row.innerHTML = "<td>" + "Quantidade: "
+                                        + quantidadeDispositivo + "</td> ";
 
-								}
+                            }
 
-								function criarTabelaEstoque(quantidadeEstoque) {
-									var tabelas = document
-											.getElementById("tabelaResultadoEstoque");
-									var row = tabelas.insertRow(1);
-									row.innerHTML = "<td>" + "Quantidade: "
-											+ quantidadeEstoque + "</td> ";
+                        });
+    </script>
+    <body>
 
-								}
+        <div class="container-fluid">  
+            <div id="container_Principal">                
+                <div th:fragment="menu">
+                    <div class="sidebar">
+                        <header>Menu</header>                         
+                        <a href="#" class="active">
+                            <i class="fas fa-chart-line"></i>
+                            <span class="glyphicon glyphicon-home"> P&aacute;gina Inicial </span>
+                        </a>
+                        <a href="#" th:href="@{/cadastro/usuarios/listar}">
+                            <i class="fas fa-users"></i>
+                            <span class="glyphicon glyphicon-user"> Usu&aacute;rio </span>
+                        </a>
+                        <a href="#" th:href="@{/cadastro/produto/listar}">
+                            <i class="fas fa-box-open"></i>
+                            <span class="glyphicon glyphicon-gift"> Produto </span>
+                        </a>
+                        <a href="#" th:href="@{/cadastro/estoque/listar}">
+                            <i class="fas fa-people-carry"></i>
+                            <span class="glyphicon glyphicon-shopping-cart"> Estoque </span>
+                        </a>
+                        <a href="#" th:href="@{/cadastro/dispositivos/listar}">
+                            <i class="fas fa-mobile-alt"></i>
+                            <span class="glyphicon glyphicon-phone"> Dispositivo </span>
+                        </a>
+                        <a href="#" th:href="@{/modulos}">
+                            <i class="fab fa-bitcoin"></i>
+                            <span class="glyphicon glyphicon-usd"> Financeiro </span>
+                        </a>
+                        <!-- 			<a href="" th:href="@{/objetosCadastradosQuantidade}"> -->
+                        <!-- 				<i class="fas fa-tasks"></i> -->
+                        <!-- 				<span>Relat&oacute;rios</span> -->
+                        <!-- 			</a> -->                        
+                    </div>                    
+                    <!-- 				<div> -->
+                    <!-- 					<nav class="navbar navbar-light bg-light"> -->
+                    <!-- 						<form class="form-inline"> -->
+                    <!-- 							<input class="form-control mr-sm-2" type="search" -->
+                    <!-- 								placeholder="pesquisar" aria-label="Search"> -->
+                    <!-- 							<button class="btn btn-outline-success my-2 my-sm-0" -->
+                    <!-- 								type="submit">Pesquisar</button> -->
+                    <!-- 						</form> -->
+                    <!-- 					</nav> -->
+                    <!-- 				</div> -->
 
-								function criarTabelaDispositivo(
-										quantidadeDispositivo) {
-									var tabelas = document
-											.getElementById("tabelaResultadoDispositivo");
-									var row = tabelas.insertRow(1);
-									row.innerHTML = "<td>" + "Quantidade: "
-											+ quantidadeDispositivo + "</td> ";
-
-								}
-
-							});
-		</script>
-	</div>
-
-	<!--  <div class="row"  id="div_Cards"  >  -->
-	<!-- <!-- 	<section class="container"> -->
-	<!-- 		<div class="card "  > -->
-	<!-- 			<p>Usuarios Cadastrados</p> -->
-	<!-- 			<img id="imagemUsuario" src="./imagens/iconeUsuario.png"> -->
-	<!-- 			<table id="tabelaResultado"> -->
-	<!-- 				<tr> -->
-	<!-- 					<td id="resultado"></td> -->
-	<!-- 				</tr> -->
-	<!-- 			</table> -->
-
-
-	<!-- 		</div> -->
-
-	<!-- 		<div   id="card"> -->
-	<!-- 			<p>Produtos Cadastrados</p> -->
-	<!-- 			<img id="imagemProduto" src="./imagens/iconeProduto.jpg"> -->
-	<!-- 			<table id="tabelaResultadoProduto"> -->
-	<!-- 				<tr> -->
-	<!-- 					<td id="resultado"></td> -->
-	<!-- 				</tr> -->
-	<!-- 			</table> -->
-	<!-- 		</div> -->
-
-	<!-- 		<div  id="card"> -->
-	<!-- 			<p>Estoques Cadastrados</p> -->
-	<!-- 			<img id="imagemProduto" src="./imagens/iconeEstoque.png"> -->
-	<!-- 			<table id="tabelaResultadoEstoque"> -->
-	<!-- 				<tr> -->
-	<!-- 					<td id="resultado"></td> -->
-	<!-- 				</tr> -->
-	<!-- 			</table> -->
-	<!-- 		</div> -->
-
-	<!-- 		<div   id="card"> -->
-	<!-- 			<p>Dispositivos Cadastrados</p> -->
-	<!-- 			<img id="imagemProduto" src="./imagens/iconeDispositivo.jpg"> -->
-	<!-- 			<table id="tabelaResultadoDispositivo"> -->
-	<!-- 				<tr> -->
-	<!-- 					<td id="resultado"></td> -->
-	<!-- 				</tr> -->
-	<!-- 			</table> -->
-	<!-- 		</div> -->
-
-	<!-- <!-- 	</section>	 -->
-	<!-- 		</div> -->
+                </div>
+            </div>
+            <!--  <div class="row"  id="div_Cards"  >  -->
+            <!-- <!-- 	<section class="container"> -->
+            <!-- 		<div class="card "  > -->
+            <!-- 			<p>Usuarios Cadastrados</p> -->
+            <!-- 			<img id="imagemUsuario" src="./imagens/iconeUsuario.png"> -->
+            <!-- 			<table id="tabelaResultado"> -->
+            <!-- 				<tr> -->
+            <!-- 					<td id="resultado"></td> -->
+            <!-- 				</tr> -->
+            <!-- 			</table> -->
 
 
+            <!-- 		</div> -->
 
+            <!-- 		<div   id="card"> -->
+            <!-- 			<p>Produtos Cadastrados</p> -->
+            <!-- 			<img id="imagemProduto" src="./imagens/iconeProduto.jpg"> -->
+            <!-- 			<table id="tabelaResultadoProduto"> -->
+            <!-- 				<tr> -->
+            <!-- 					<td id="resultado"></td> -->
+            <!-- 				</tr> -->
+            <!-- 			</table> -->
+            <!-- 		</div> -->
 
-	<section class="container" id="container_Principal">
-		<div class="content" id="container_Filhos">
-			<img id="imagem_card" src="./imagens/iconeUsuario.png">
-			<p>Usu&aacute;rios Cadastrados</p>
-			<table id="tabelaResultado">
-				<tr>
-					<td id="resultado"></td>
-				</tr>
-			</table>
-		</div>
-		<div class="content" id="container_Filhos">
-			<img id="imagem_card" src="./imagens/iconeProduto.jpg">
-			<p>Produtos Cadastrados</p>
-			<table id="tabelaResultadoProduto">
-				<tr>
-					<td id="resultado"></td>
-				</tr>
-			</table>
-		</div>
-		<div class="content" id="container_Filhos">
-			<img id="imagem_card" src="./imagens/iconeEstoque.png">
-			<p>Estoques Cadastrados</p>
-			<table id="tabelaResultadoEstoque">
-				<tr>
-					<td id="resultado"></td>
-				</tr>
-			</table>
-		</div>
-		<div class="content" id="container_Filhos">
-			<img id="imagem_card" src="./imagens/iconeDispositivo.jpg">
-			<p>Dispositivos Cadastrados</p>
-			<table id="tabelaResultadoDispositivo">
-				<tr>
-					<td id="resultado"></td>
-				</tr>
-			</table>
-		</div>
+            <!-- 		<div  id="card"> -->
+            <!-- 			<p>Estoques Cadastrados</p> -->
+            <!-- 			<img id="imagemProduto" src="./imagens/iconeEstoque.png"> -->
+            <!-- 			<table id="tabelaResultadoEstoque"> -->
+            <!-- 				<tr> -->
+            <!-- 					<td id="resultado"></td> -->
+            <!-- 				</tr> -->
+            <!-- 			</table> -->
+            <!-- 		</div> -->
 
+            <!-- 		<div   id="card"> -->
+            <!-- 			<p>Dispositivos Cadastrados</p> -->
+            <!-- 			<img id="imagemProduto" src="./imagens/iconeDispositivo.jpg"> -->
+            <!-- 			<table id="tabelaResultadoDispositivo"> -->
+            <!-- 				<tr> -->
+            <!-- 					<td id="resultado"></td> -->
+            <!-- 				</tr> -->
+            <!-- 			</table> -->
+            <!-- 		</div> -->
 
-	</section>
+            <!-- <!-- 	</section>	 -->
+            <!-- 		</div> -->
+            <div class="container-fluid"> 
+                <div class="row">
+                    <section> <!-- class="container" id="container_Principal" -->
+                        <div class="content text-center" id="container_Filhos">
+                            <img id="imagem_card" src="./imagens/iconeUsuario.png">
+                            <p>Usu&aacute;rios Cadastrados</p>
+                            <table id="tabelaResultado">
+                                <tr>
+                                    <td id="resultado"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="content text-center" id="container_Filhos">
+                            <img id="imagem_card" src="./imagens/iconeProduto.jpg">
+                            <p>Produtos Cadastrados</p>
+                            <table id="tabelaResultadoProduto">
+                                <tr>
+                                    <td id="resultado"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="content text-center" id="container_Filhos">
+                            <img id="imagem_card" src="./imagens/iconeEstoque.png">
+                            <p>Estoques Cadastrados</p>
+                            <table id="tabelaResultadoEstoque">
+                                <tr>
+                                    <td id="resultado"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="content text-center" id="container_Filhos">
+                            <img id="imagem_card" src="./imagens/iconeDispositivo.jpg">
+                            <p>Dispositivos Cadastrados</p>
+                            <table id="tabelaResultadoDispositivo">
+                                <tr>
+                                    <td id="resultado"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+                <div class="container" id="div2_index">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
 
-	<div class="container " id="div2_index">
-		<canvas id="myChart"></canvas>
-	</div>
-	<div>
-		<script
-			src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-		<script
-			src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
-		<script>
-			$('document')
-					.ready(
-							function() {
-								$
-										.ajax({
-											type : "GET",
-											url : "http://localhost:8080/estoque/status",
-											dataType : "json",
-											success : function(data) {
-												var nomeEstoque = [];
-												var quantidadeEstoque = [];
-												var quantidadeProduto = [];
+            <div class="fixed-bottom">
+                <div th:replace="fragments :: footer"></div>
+            </div>
 
-												for (var i = 0; i < data[0].length; i++) {
-													nomeEstoque
-															.push(data[0][i].nome);
-													quantidadeEstoque
-													.push(parseInt(data[0][i].quantidade));
-												}
-												
-												for (var i = 0; i < data[1].length; i++) {
-													//nomeEstoque.push(data[1][i].nome);
-													quantidadeEstoque
-															.push(parseInt(data[1][i].quantidade));
-												}
-// 												for (var i = 0; i < data[2].length; i++) {
-// 													quantidadeProduto.push(data[2][i].produto.quantidade);
-// 												}
+            <div class="text-center" th:fragment="form">
+                <div class="content">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email</label> 
+                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Digite seu email"> 
+                            <small id="emailHelp" class="form-text text-muted"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Senha</label> 
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Senha">
+                        </div>
+                        <!--                    <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                <label class="form-check-label" for="exampleCheck1">Deseja Lembrar</label>
+                                            </div>-->
+                        <br/>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                    </form>
+                </div>
+            </div>
+            <br/>
+            <div class="footer">                
+                <!-- Copyright -->                
+                <div class="text-center py-3">
+                    <h6><b>LucaSLinks Software Version 4.0</b></h6>
+                </div>
+                <!-- Copyright -->                
+            </div>
+        </div>
 
-												console.table(data);
-												grafico(nomeEstoque,
-														quantidadeEstoque);
-											}
-										});
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.1/chart.min.js"></script>
+        <script>
+        $('document')
+                .ready(
+                        function () {
+                            $
+                                    .ajax({
+                                        type: "GET",
+                                        url: "http://localhost:8080/estoque/status",
+                                        dataType: "json",
+                                        success: function (data) {
+                                            var nomeEstoque = [];
+                                            var quantidadeEstoque = [];
+                                            var quantidadeProduto = [];
 
-								function grafico(labels, nEstoque, estoqueQuantidade) {
+                                            for (var i = 0; i < data[0].length; i++) {
+                                                nomeEstoque
+                                                        .push(data[0][i].nome);
+                                                quantidadeEstoque
+                                                        .push(parseInt(data[0][i].quantidade));
+                                            }
 
-									var ctx = document
-											.getElementById("myChart");
-									var chartGraph = new Chart(
-											ctx,
-											{
-												type : 'bar',
-												data : {
-													labels : labels,
-													datasets : [ {
-														label : "Quantidade",
-														
-														data : nEstoque,
-														borderWidth : 6,
-														borderColor : 'rgba(77, 166, 253 , 0.85)',
-													} ]
-													
-												}
-											});
+                                            for (var i = 0; i < data[1].length; i++) {
+                                                //nomeEstoque.push(data[1][i].nome);
+                                                quantidadeEstoque
+                                                        .push(parseInt(data[1][i].quantidade));
+                                            }
+                                            // 												for (var i = 0; i < data[2].length; i++) {
+                                            // 													quantidadeProduto.push(data[2][i].produto.quantidade);
+                                            // 												}
 
-								}
-							});
-		</script>
-	</div>
+                                            console.table(data);
+                                            grafico(nomeEstoque,
+                                                    quantidadeEstoque);
+                                        }
+                                    });
 
-	<div class="fixed-bottom">
-		<div th:replace="fragments :: footer"></div>
-	</div>
+                            function grafico(labels, nEstoque, estoqueQuantidade) {
 
+                                var ctx = document
+                                        .getElementById("myChart");
+                                var chartGraph = new Chart(
+                                        ctx,
+                                        {
+                                            type: 'bar',
+                                            data: {
+                                                labels: labels,
+                                                datasets: [{
+                                                        label: "Quantidade",
+                                                        data: nEstoque,
+                                                        borderWidth: 6,
+                                                        borderColor: 'rgba(77, 166, 253 , 0.85)'
+                                                    }]
 
+                                            }
+                                        });
 
-</body>
-
+                            }
+                        });
+        </script>
+    </body>
 </html>

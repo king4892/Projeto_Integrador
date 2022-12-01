@@ -31,7 +31,7 @@ public class Dispositivo {
 	@NotEmpty
 	private String modelo;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.REFRESH)
 	@PrimaryKeyJoinColumn
 	private Usuario usuario;
 
