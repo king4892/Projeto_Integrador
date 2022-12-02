@@ -1,15 +1,6 @@
 package com.springboot.application;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import com.springboot.application.model.Conta_Pagar;
-import com.springboot.application.model.Estoque;
-import com.springboot.application.model.Fornecedor;
-import com.springboot.application.model.Produto;
-import com.springboot.application.model.Usuario;
-import com.springboot.application.model.Venda;
 
 @SpringBootTest
 class ProjetoBasicoApplicationTests {
